@@ -1,11 +1,11 @@
 {
     "ADF-BENCH": {
         "Type": "ConnectionProfile:Azure Data Factory",
-        "Tenant ID": "92b796c5-5839-40a6-8dd9-c1fad320c69b",
+        "Tenant ID": "--redacted--",
         "Identity Type": "PRINCIPAL",
         "Client Secret": {"Secret": "azure-736885f534e94d86a5c991b812193116-secret"},
-        "Subscription ID": "fee1b749-2ef4-4205-a1a5-3fdb5b803697",
-        "Application ID": "736885f5-34e9-4d86-a5c9-91b812193116",
+        "Subscription ID": "--redacted--",
+        "Application ID": "--redacted--",
         "Management url": "management.azure.com",
         "REST Login url": "login.microsoftonline.com",
         "Connection Timeout": "75",
@@ -16,7 +16,7 @@
     "ADB-BENCH": {
         "Type": "ConnectionProfile:AWS Glue DataBrew",
         "Authentication": "SECRET",
-        "AWS Access Key": "AKIAZCKNG7JUBMFTC7NC",
+        "AWS Access Key": "--redacted--",
         "AWS Secret":  {"Secret": "aws-secret-key"},
         "AWS Region": "us-west-2",
         "AWS Logs URL": "https://logs.{{AWSRegion}}.amazonaws.com",
@@ -36,7 +36,7 @@
 
     "AWS-GLUE-BENCH": {
         "Type": "ConnectionProfile:AWS Glue",
-        "AWS Access key ID": "AKIAZCKNG7JUBMFTC7NC",
+        "AWS Access key ID": "--redacted--",
         "AWS Secret": {"Secret": "aws-secret-key"},
         "Authentication": "SECRET",
         "AWS Region": "us-west-2",

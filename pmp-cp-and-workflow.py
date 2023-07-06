@@ -12,7 +12,7 @@ from ctm_python_client.core.monitoring import *
 from aapi import *
 import json
 
-ctmhost = "a90473c38638242c1b5a4c9d4e7b3015-537144556.us-west-2.elb.amazonaws.com"
+ctmhost = "--redacted--.us-west-2.elb.amazonaws.com"
 ctmport = "8443"
 ctmuser= "workbench"
 ctmpswd = "workbench"
@@ -34,7 +34,7 @@ cpGlue = ConnectionProfileAwsGlue("AWS-GLUE-BENCH",
         centralized         = True,
         aws_region          = "us-west-2",
         authentication      = "SECRET",
-        aws_access_key_id   = "AKIAZCKNG7JUBMFTC7NC",
+        aws_access_key_id   = "--redacted--",
         aws_secret          = {"Secret": "aws-secret-key"},
         glue_url            = "glue.us-west-2.amazonaws.com",
         connection_timeout  = "40"
@@ -44,7 +44,7 @@ ctm_workflow.add(cpGlue)
 cpDataBrew = ConnectionProfileAwsGlueDataBrew("ADB-BENCH",
         centralized         = True,
         authentication      = "SECRET",
-        aws_access_key      = "AKIAZCKNG7JUBMFTC7NC",
+        aws_access_key      = "--redacted--",
         aws_secret          = {"Secret": "aws-secret-key"},
         aws_api_base_url    = "https://databrew.{{AWSRegion}}.amazonaws.com",
         aws_logs_url        = "https://logs.{{AWSRegion}}.amazonaws.com",
@@ -54,11 +54,11 @@ cpDataBrew = ConnectionProfileAwsGlueDataBrew("ADB-BENCH",
 ctm_workflow.add(cpDataBrew)
 
 cpADF = ConnectionProfileAzureDataFactory("ADF-BENCH",
-        tenant_id           = "92b796c5-5839-40a6-8dd9-c1fad320c69b",
+        tenant_id           = "--redacted--",
         identity_type       = "PRINCIPAL",
         client_secret       = {"Secret": "azure-736885f534e94d86a5c991b812193116-secret"},
-        subscription_id     = "fee1b749-2ef4-4205-a1a5-3fdb5b803697",
-        application_id      = "736885f5-34e9-4d86-a5c9-91b812193116",
+        subscription_id     = "--redacted--",
+        application_id      = "--redacted--",
         management_url      = "management.azure.com",
         rest_login_url      = "login.microsoftonline.com",
         connection_timeout  = "75",
