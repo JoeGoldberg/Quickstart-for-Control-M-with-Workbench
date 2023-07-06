@@ -1,0 +1,77 @@
+{
+	"Defaults" : {
+		"RunAs" : "workbench", "OrderMethod": "Manual", "Application" : "workbench", "SubApplication" : "pipeline-pm", "Host" : "workbench", 
+        "Folder": {"SiteStandard": ""},
+		"Job" : {
+			"actionIfError" : {
+				"Type": "If", "CompletionStatus":"NOTOK", "mailTeam": 
+						{"Type": "Mail", "Message": "Job %%JOBNAME failed", "Subject": "Error occurred", "To": "joe_goldberg@bmc.com"}
+            }
+		}
+	},
+
+	"pmp-mc-pipeline": {
+		"Type": "Folder",
+		"Comment" : "Predictive Maintenance application orchestratedacross multiple clouds and on-prem environments",   
+
+        "pmp-mc-glue-copy-to-Redshift": {"Type": "Job:AWS Glue",
+            "Comment" : "Runs AWS Glue job to insert S3 data into Redshift",
+            "ConnectionProfile": "AWS-GLUE-BENCH",
+            "Glue Job Name": "GlueS3toRedshift",
+            "Glue Job Arguments": "unchecked"
+        },
+
+        "pmp-mc-databrew-clean-telematics-data" : {"Type" : "Job:AWS Glue DataBrew",
+            "Comment" : "Run AWS Glue Databrew recipe to cleanse telematics data",
+            "ConnectionProfile" : "ADB-BENCH",
+            "Job Name" : "clean-telematics-data",
+            "Output Job Logs" : "unchecked",
+            "Output" : { }
+         },
+
+        "pmp-mc-azuredatafactory-Pipeline": {"Type": "Job:Azure Data Factory",
+            "Comment" : "Runs Azure Data Pipeline",
+            "ConnectionProfile": "ADF_BENCH",
+            "Resource Group Name": "jgSBDemo_v52",
+            "Data Factory Name": "FY21DemoADF-wgkt6m72loema",
+            "Pipeline Name": "SimplePipeline",
+            "Parameters": "{}"
+        },
+
+        "pmp-mc-gcp-dataflow-gcs-to-bq-personal": {"Type": "Job:GCP DataFlow",
+            "ConnectionProfile": "DFLOW-BENCH",
+            "Project ID": "sso-gcp-dba-ctm4-pub-cc10274",
+            "Region": "us-central1",
+            "Log Level": "INFO",
+            "Parameters (JSON Format)": "{\"jobName\": \"pmp-mc-gcp-dataflow-gcs-to-bq-personal\",    \"environment\": {        \"bypassTempDirValidation\": false,        \"tempLocation\": \"gs://prj1968-bmc-data-platform-foundation/bmc_personal_details/temp\",        \"ipConfiguration\": \"WORKER_IP_UNSPECIFIED\",        \"additionalExperiments\": []    },    \"parameters\": {        \"javascriptTextTransformGcsPath\": \"gs://prj1968-bmc-data-platform-foundation/bmc_personal_details/bmc_personal_details_transform.js\",        \"JSONPath\": \"gs://prj1968-bmc-data-platform-foundation/bmc_personal_details/bmc_personal_details.json\",        \"javascriptTextTransformFunctionName\": \"transform\",        \"outputTable\": \"sso-gcp-dba-ctm4-pub-cc10274:bmc_dataplatform_foundation.bmc_personal_details_V2\",        \"inputFilePattern\": \"gs://prj1968-bmc-data-platform-foundation/bmc_personal_details/bmc_personal_details.csv\",        \"bigQueryLoadingTemporaryDirectory\": \"gs://prj1968-bmc-data-platform-foundation/bmc_personal_details/tmpbq\"    }}", 
+            "Template Location (gs://)": "gs://dataflow-templates-us-central1/latest/GCS_Text_to_BigQuery",
+            "Template Type": "Classic Template"
+            
+        },
+
+        "pmp-mc-service": {"Type": "Job:SLAManagement",
+            "ServiceName": "AWS-Azure-GCP pipeline service",
+            "ServicePriority": "3",
+            "JobRunsDeviationsTolerance": "3",
+            "CompleteIn": {
+              "Time": "20:00"
+            }
+        },
+
+        "jobsimple": {"Type":"Flow", 
+            "Sequence":[
+                "pmp-mc-glue-copy-to-Redshift",
+                "pmp-mc-databrew-clean-telematics-data",
+                "pmp-mc-service"
+            ]
+        },
+        "jobtree": {"Type":"Flow", 
+            "Sequence":[
+                "pmp-mc-glue-copy-to-Redshift",
+                "pmp-mc-azuredatafactory-Pipeline",
+                "pmp-mc-gcp-dataflow-gcs-to-bq-personal",
+                "pmp-mc-service"
+            ]
+        }
+    }
+}

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ctmbench
+  labels:
+    app: ctmbench
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ctmbench
+  template:
+    metadata:
+      labels:
+        app: ctmbench
+    spec:
+      hostname: workbench
+      containers:
+      - name: ctmbench
+        image: controlm/workbench:latest
+        resources:
+          requests:
+            memory: "10G"
+        ports:
+        - containerPort: 8443
+          name: ctmweb
+        - containerPort: 7005
+          name: ctmagent
+        livenessProbe:
+          httpGet:
+            path: /automation-api/status
+            port: 8443
+            scheme: https
+          initialDelaySeconds: 600
+          periodSeconds: 600
+# If expecting to inherit IAM role from the node, use nodeseelctor to ensure pod is scheduled onto desired node
+#     nodeselector:
+#        iamrole: ctmagent
+#
+# Assign the iamrole=ctmagent label to one or more nodes via "kubectl label nodes <node name> iamrole=ctmagent"

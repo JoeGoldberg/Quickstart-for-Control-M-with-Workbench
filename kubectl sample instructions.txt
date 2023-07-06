@@ -1,0 +1,8 @@
+#
+#   kubctl commands
+#
+kubectl cluster-info
+kubectl describe nodes
+kubectl get svc
+kubectl get deployments
+kubectl get pods

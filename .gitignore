@@ -1,1 +1,6 @@
-
+jogoldbe_pyctm-connectionprofiles.py
+jogoldbe_pyctm-flow-demo.py
+.gitignore
+temp-cp.json
+ctmdemo/*
+ctmsecrets/*
