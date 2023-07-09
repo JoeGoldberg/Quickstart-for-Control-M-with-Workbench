@@ -31,7 +31,7 @@
 
         "pmp-mc-azuredatafactory-Pipeline": {"Type": "Job:Azure Data Factory",
             "Comment" : "Runs Azure Data Pipeline",
-            "ConnectionProfile": "ADF_BENCH",
+            "ConnectionProfile": "ADF-BENCH",
             "Resource Group Name": "jgSBDemo_v52",
             "Data Factory Name": "FY21DemoADF-wgkt6m72loema",
             "Pipeline Name": "SimplePipeline",
